@@ -12,6 +12,7 @@
 #include "stb/stb_image.h"
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "stb/stb_image_write.h"
+#define NUM_THREADS 8
 
 
 void gaussian_blur(const uint8_t *input_image, int height, int width,
@@ -20,6 +21,7 @@ void gaussian_blur(const uint8_t *input_image, int height, int width,
   const double kernel[9] = {1, 2, 1, 2, 4, 2, 1, 2, 1};
   const int kernel_sum = 16;
 
+  #pragma parallel omp for num_threads(NUM_THREADS)
   for (int col = OFFSET; col < width - OFFSET; col++) {
     for (int row = OFFSET; row < height - OFFSET; row++) {
       double output_intensity = 0;
@@ -42,6 +44,7 @@ void gradient_magnitude_direction(const uint8_t *input_image, int height,
   const int8_t Gx[] = {-1, 0, 1, -2, 0, 2, -1, 0, 1};
   const int8_t Gy[] = {1, 2, 1, 0, 0, 0, -1, -2, -1};
 
+  #pragma parallel omp for num_threads(NUM_THREADS)
   for (int col = OFFSET; col < width - OFFSET; col++) {
     for (int row = OFFSET; row < height - OFFSET; row++) {
       double grad_x_sum = 0.0;
@@ -85,11 +88,15 @@ void gradient_magnitude_direction(const uint8_t *input_image, int height,
     }
   }
 }
+
+
 void non_max_suppression(double *gradient_magnitude,
                          uint8_t *gradient_direction, int height, int width,
                          double *output_image) {
 
   memcpy(output_image, gradient_magnitude, width * height * sizeof(double));
+
+  #pragma parallel omp for num_threads(NUM_THREADS)
   for (int col = OFFSET; col < width - OFFSET; col++) {
     for (int row = OFFSET; row < height - OFFSET; row++) {
       int pixel_index = col + (row * width);
@@ -132,7 +139,7 @@ void non_max_suppression(double *gradient_magnitude,
 void thresholding(double *suppressed_image, int height, int width,
                   int high_threshold, int low_threshold,
                   uint8_t *output_image) {
-
+  #pragma parallel omp for num_threads(NUM_THREADS)
   for (int col = 0; col < width; col++) {
     for (int row = 0; row < height; row++) {
       int pixel_index = col + (row * width);
@@ -150,6 +157,8 @@ void hysteresis(uint8_t *input_image, int height, int width,
                 uint8_t *output_image) {
 
   memcpy(output_image, input_image, width * height * sizeof(uint8_t));
+
+  #pragma parallel omp for num_threads(NUM_THREADS)
   for (int col = OFFSET; col < width - OFFSET; col++) {
     for (int row = OFFSET; row < height - OFFSET; row++) {
       int pixel_index = col + (row * width);
@@ -192,7 +201,7 @@ void canny_edge_detect(const uint8_t *input_image, int height, int width,
 
 int main(int argc, char **argv) {
       int width, height, channels , gray_channels;
-
+      double t1 , t2 , etime;
       unsigned char *img = stbi_load("sky2.jpeg", &width, &height, &channels, 0);
 
       if (channels == 4 ) gray_channels = 2 ;
@@ -225,7 +234,16 @@ int main(int argc, char **argv) {
      printf("Wrote the gray image with a width of %dpx, a height of %dpx and %d channels\n", width, height, gray_channels);
 
      unsigned char *edge_img = malloc (img_size_gray) ;
+     t1 = omp_get_wtime();
+
      canny_edge_detect(gray_img,height,width,thresh_max,thresh_min,img_size_gray,edge_img);
+
+     t2 = omp_get_wtime();
+
+    etime = (t2 - t1);
+
+	printf("\n\nCanny Edge Algorithme Omp For Execution Time = %f\n", etime);
+
      stbi_write_jpg("sky_edge.jpeg", width, height, gray_channels, edge_img, 100);
      printf("Wrote the edge image with a width of %dpx, a height of %dpx and %d channels\n", width, height, gray_channels);
 

@@ -6,9 +6,13 @@
 	<stdio.h>
 	<math.h>
 
-1673570231 source:c:\users\admin\desktop\2cs\s1\hpc\projethpc\canny_edge_detector\main.c
+1673624102 source:c:\users\admin\desktop\2cs\s1\hpc\projethpc\canny_edge_detector\main.c
 	<stdio.h>
 	<stdlib.h>
+	<string.h>
+	<stdint.h>
+	<math.h>
+	"omp.h"
 	"stb/stb_image.h"
 	"stb/stb_image_write.h"
 
