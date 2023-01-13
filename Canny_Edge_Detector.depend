@@ -1,0 +1,134 @@
+# depslib dependency file v1.0
+1673543323 source:c:\users\admin\desktop\2cs\s1\hpc\projethpc\canny_edge_detector\canny.c
+	"omp.h"
+	<string.h>
+	<stdint.h>
+	<stdio.h>
+	<math.h>
+
+1673570231 source:c:\users\admin\desktop\2cs\s1\hpc\projethpc\canny_edge_detector\main.c
+	<stdio.h>
+	<stdlib.h>
+	"stb/stb_image.h"
+	"stb/stb_image_write.h"
+
+1673543323 c:\users\admin\desktop\2cs\s1\hpc\projethpc\canny_edge_detector\canny.c
+	"omp.h"
+	<string.h>
+	<stdint.h>
+	<stdio.h>
+	<math.h>
+
+1673542532 c:\users\admin\desktop\2cs\s1\hpc\projethpc\canny_edge_detector\leptonica\src\allheaders.h
+	"alltypes.h"
+
+1673542910 c:\users\admin\desktop\2cs\s1\hpc\projethpc\canny_edge_detector\leptonica\src\alltypes.h
+	<stdio.h>
+	<stdlib.h>
+	<stdarg.h>
+	"environ.h"
+	"array.h"
+	"bbuffer.h"
+	"hashmap.h"
+	"heap.h"
+	"list.h"
+	"ptra.h"
+	"queue.h"
+	"rbtree.h"
+	"stack.h"
+	"arrayaccess.h"
+	"bmf.h"
+	"ccbord.h"
+	"colorfill.h"
+	"dewarp.h"
+	"gplot.h"
+	"imageio.h"
+	"jbclass.h"
+	"morph.h"
+	"pix.h"
+	"recog.h"
+	"regutils.h"
+	"stringcode.h"
+	"sudoku.h"
+	"watershed.h"
+
+1673542532 c:\users\admin\desktop\2cs\s1\hpc\projethpc\canny_edge_detector\leptonica\src\environ.h
+	<stdint.h>
+	<stdatomic.h>
+	<stdint.h>
+	<Availability.h>
+
+1673542532 c:\users\admin\desktop\2cs\s1\hpc\projethpc\canny_edge_detector\leptonica\src\array.h
+
+1673542532 c:\users\admin\desktop\2cs\s1\hpc\projethpc\canny_edge_detector\leptonica\src\bbuffer.h
+
+1673542532 c:\users\admin\desktop\2cs\s1\hpc\projethpc\canny_edge_detector\leptonica\src\hashmap.h
+
+1673542532 c:\users\admin\desktop\2cs\s1\hpc\projethpc\canny_edge_detector\leptonica\src\heap.h
+
+1673542532 c:\users\admin\desktop\2cs\s1\hpc\projethpc\canny_edge_detector\leptonica\src\list.h
+
+1673542533 c:\users\admin\desktop\2cs\s1\hpc\projethpc\canny_edge_detector\leptonica\src\ptra.h
+
+1673542533 c:\users\admin\desktop\2cs\s1\hpc\projethpc\canny_edge_detector\leptonica\src\queue.h
+
+1673542533 c:\users\admin\desktop\2cs\s1\hpc\projethpc\canny_edge_detector\leptonica\src\rbtree.h
+
+1673542533 c:\users\admin\desktop\2cs\s1\hpc\projethpc\canny_edge_detector\leptonica\src\stack.h
+
+1673542532 c:\users\admin\desktop\2cs\s1\hpc\projethpc\canny_edge_detector\leptonica\src\arrayaccess.h
+
+1673542532 c:\users\admin\desktop\2cs\s1\hpc\projethpc\canny_edge_detector\leptonica\src\bmf.h
+
+1673542532 c:\users\admin\desktop\2cs\s1\hpc\projethpc\canny_edge_detector\leptonica\src\ccbord.h
+
+1673542532 c:\users\admin\desktop\2cs\s1\hpc\projethpc\canny_edge_detector\leptonica\src\colorfill.h
+
+1673542532 c:\users\admin\desktop\2cs\s1\hpc\projethpc\canny_edge_detector\leptonica\src\dewarp.h
+
+1673542532 c:\users\admin\desktop\2cs\s1\hpc\projethpc\canny_edge_detector\leptonica\src\gplot.h
+
+1673542532 c:\users\admin\desktop\2cs\s1\hpc\projethpc\canny_edge_detector\leptonica\src\imageio.h
+
+1673542532 c:\users\admin\desktop\2cs\s1\hpc\projethpc\canny_edge_detector\leptonica\src\jbclass.h
+
+1673542532 c:\users\admin\desktop\2cs\s1\hpc\projethpc\canny_edge_detector\leptonica\src\morph.h
+
+1673542532 c:\users\admin\desktop\2cs\s1\hpc\projethpc\canny_edge_detector\leptonica\src\pix.h
+
+1673542533 c:\users\admin\desktop\2cs\s1\hpc\projethpc\canny_edge_detector\leptonica\src\recog.h
+
+1673542533 c:\users\admin\desktop\2cs\s1\hpc\projethpc\canny_edge_detector\leptonica\src\regutils.h
+
+1673542533 c:\users\admin\desktop\2cs\s1\hpc\projethpc\canny_edge_detector\leptonica\src\stringcode.h
+
+1673542533 c:\users\admin\desktop\2cs\s1\hpc\projethpc\canny_edge_detector\leptonica\src\sudoku.h
+
+1673542533 c:\users\admin\desktop\2cs\s1\hpc\projethpc\canny_edge_detector\leptonica\src\watershed.h
+
+1673545161 c:\users\admin\desktop\2cs\s1\hpc\projethpc\canny_edge_detector\stb\stb_image.h
+	"stb_image.h"
+	<stdio.h>
+	<stdlib.h>
+	<stdarg.h>
+	<stddef.h>
+	<stdlib.h>
+	<string.h>
+	<limits.h>
+	<math.h>
+	<stdio.h>
+	<assert.h>
+	<stdint.h>
+	<emmintrin.h>
+	<intrin.h>
+	<arm_neon.h>
+
+1673545161 c:\users\admin\desktop\2cs\s1\hpc\projethpc\canny_edge_detector\stb\stb_image_write.h
+	<stdlib.h>
+	<stdio.h>
+	<stdarg.h>
+	<stdlib.h>
+	<string.h>
+	<math.h>
+	<assert.h>
+
