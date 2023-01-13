@@ -132,3 +132,39 @@
 	<math.h>
 	<assert.h>
 
+1673611113 source:c:\users\ngsi\desktop\hpc\canny-edge-detector-parallel-implementation\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdint.h>
+	<math.h>
+	"omp.h"
+	"stb/stb_image.h"
+	"stb/stb_image_write.h"
+
+1673559748 c:\users\ngsi\desktop\hpc\canny-edge-detector-parallel-implementation\stb\stb_image.h
+	"stb_image.h"
+	<stdio.h>
+	<stdlib.h>
+	<stdarg.h>
+	<stddef.h>
+	<stdlib.h>
+	<string.h>
+	<limits.h>
+	<math.h>
+	<stdio.h>
+	<assert.h>
+	<stdint.h>
+	<emmintrin.h>
+	<intrin.h>
+	<arm_neon.h>
+
+1673559748 c:\users\ngsi\desktop\hpc\canny-edge-detector-parallel-implementation\stb\stb_image_write.h
+	<stdlib.h>
+	<stdio.h>
+	<stdarg.h>
+	<stdlib.h>
+	<string.h>
+	<math.h>
+	<assert.h>
+
