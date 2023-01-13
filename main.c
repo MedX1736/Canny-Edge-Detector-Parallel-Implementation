@@ -21,7 +21,7 @@ void gaussian_blur(const uint8_t *input_image, int height, int width,
   const double kernel[9] = {1, 2, 1, 2, 4, 2, 1, 2, 1};
   const int kernel_sum = 16;
 
-  #pragma parallel omp for num_threads(NUM_THREADS)
+  #pragma omp parallel for
   for (int col = OFFSET; col < width - OFFSET; col++) {
     for (int row = OFFSET; row < height - OFFSET; row++) {
       double output_intensity = 0;
@@ -44,7 +44,7 @@ void gradient_magnitude_direction(const uint8_t *input_image, int height,
   const int8_t Gx[] = {-1, 0, 1, -2, 0, 2, -1, 0, 1};
   const int8_t Gy[] = {1, 2, 1, 0, 0, 0, -1, -2, -1};
 
-  #pragma parallel omp for num_threads(NUM_THREADS)
+  #pragma omp parallel for
   for (int col = OFFSET; col < width - OFFSET; col++) {
     for (int row = OFFSET; row < height - OFFSET; row++) {
       double grad_x_sum = 0.0;
@@ -96,7 +96,7 @@ void non_max_suppression(double *gradient_magnitude,
 
   memcpy(output_image, gradient_magnitude, width * height * sizeof(double));
 
-  #pragma parallel omp for num_threads(NUM_THREADS)
+  #pragma omp parallel for
   for (int col = OFFSET; col < width - OFFSET; col++) {
     for (int row = OFFSET; row < height - OFFSET; row++) {
       int pixel_index = col + (row * width);
@@ -139,7 +139,7 @@ void non_max_suppression(double *gradient_magnitude,
 void thresholding(double *suppressed_image, int height, int width,
                   int high_threshold, int low_threshold,
                   uint8_t *output_image) {
-  #pragma parallel omp for num_threads(NUM_THREADS)
+  #pragma omp parallel for
   for (int col = 0; col < width; col++) {
     for (int row = 0; row < height; row++) {
       int pixel_index = col + (row * width);
@@ -158,7 +158,7 @@ void hysteresis(uint8_t *input_image, int height, int width,
 
   memcpy(output_image, input_image, width * height * sizeof(uint8_t));
 
-  #pragma parallel omp for num_threads(NUM_THREADS)
+  #pragma omp parallel for
   for (int col = OFFSET; col < width - OFFSET; col++) {
     for (int row = OFFSET; row < height - OFFSET; row++) {
       int pixel_index = col + (row * width);
@@ -200,10 +200,11 @@ void canny_edge_detect(const uint8_t *input_image, int height, int width,
 
 
 int main(int argc, char **argv) {
+    /**Specifier Nombre de Threads **/
+    omp_set_num_threads(NUM_THREADS);
       int width, height, channels , gray_channels;
       double t1 , t2 , etime;
       unsigned char *img = stbi_load("sky2.jpeg", &width, &height, &channels, 0);
-
       if (channels == 4 ) gray_channels = 2 ;
       else gray_channels = 1;
 
