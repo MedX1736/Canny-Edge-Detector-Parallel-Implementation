@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdint.h>
 #include <math.h>
+#include <time.h>
 #define KERNEL_SIZE 1
 #define OFFSET 1
 #define thresh_max 90
@@ -192,6 +193,8 @@ void canny_edge_detect(const uint8_t *input_image, int height, int width,
 
 int main(int argc, char **argv) {
       int width, height, channels , gray_channels;
+      clock_t t1, t2;
+      float timeInS;
 
       unsigned char *img = stbi_load("sky2.jpeg", &width, &height, &channels, 0);
 
@@ -225,10 +228,13 @@ int main(int argc, char **argv) {
      printf("Wrote the gray image with a width of %dpx, a height of %dpx and %d channels\n", width, height, gray_channels);
 
      unsigned char *edge_img = malloc (img_size_gray) ;
+     t1 = clock();
      canny_edge_detect(gray_img,height,width,thresh_max,thresh_min,img_size_gray,edge_img);
+     t2 = clock();
      stbi_write_jpg("sky_edge.jpeg", width, height, gray_channels, edge_img, 100);
      printf("Wrote the edge image with a width of %dpx, a height of %dpx and %d channels\n", width, height, gray_channels);
-
+     timeInS = (float)(t2-t1)/CLOCKS_PER_SEC;
+     printf("\n\ntemps d'exécution = %f\n", timeInS);
 
      stbi_image_free(img);
 
