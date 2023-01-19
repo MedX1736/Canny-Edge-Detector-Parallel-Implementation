@@ -12,7 +12,7 @@
 #include "stb/stb_image.h"
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "stb/stb_image_write.h"
-#define NUM_THREADS 8
+#define NUM_THREADS 16
 
 
 void gaussian_blur(const uint8_t *input_image, int height, int width,
@@ -204,7 +204,11 @@ int main(int argc, char **argv) {
     omp_set_num_threads(NUM_THREADS);
       int width, height, channels , gray_channels;
       double t1 , t2 , etime;
-      unsigned char *img = stbi_load("sky2.jpeg", &width, &height, &channels, 0);
+      char imagefilename[100] ;
+      printf("Enter file Name : ");
+      scanf("%s",imagefilename);
+
+      unsigned char *img = stbi_load(imagefilename, &width, &height, &channels, 0);
       if (channels == 4 ) gray_channels = 2 ;
       else gray_channels = 1;
 
@@ -231,8 +235,8 @@ int main(int argc, char **argv) {
      }
 
 
-     stbi_write_jpg("sky_gray.jpeg", width, height, gray_channels, gray_img, 100);
-     printf("Wrote the gray image with a width of %dpx, a height of %dpx and %d channels\n", width, height, gray_channels);
+    // stbi_write_jpg("sky_gray.jpeg", width, height, gray_channels, gray_img, 100);
+     //printf("Wrote the gray image with a width of %dpx, a height of %dpx and %d channels\n", width, height, gray_channels);
 
      unsigned char *edge_img = malloc (img_size_gray) ;
      t1 = omp_get_wtime();
@@ -242,10 +246,9 @@ int main(int argc, char **argv) {
      t2 = omp_get_wtime();
 
     etime = (t2 - t1);
+	printf("****Canny Edge Algorithme Omp For Execution Time = %f****\n", etime);
 
-	printf("\n\nCanny Edge Algorithme Omp For Execution Time = %f\n", etime);
-
-     stbi_write_jpg("sky_edge.jpeg", width, height, gray_channels, edge_img, 100);
+     stbi_write_jpg("Result.jpg", width, height, gray_channels, edge_img, 100);
      printf("Wrote the edge image with a width of %dpx, a height of %dpx and %d channels\n", width, height, gray_channels);
 
 
