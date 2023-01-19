@@ -195,32 +195,29 @@ int main(int argc, char **argv)
 {
       int width, height, channels , gray_channels;
       clock_t t1, t2;
-      char* imagefilename ;
+      char imagefilename[100] ;
       float timeInS;
-      //printf("Enter file Name : ");
-      //scanf("%s",imagefilename);
+      printf("Enter file Name : ");
+      scanf("%s",imagefilename);
 
-      unsigned char *img = stbi_load("img37202800.jpg", &width, &height, &channels, 0);
-
-      if (channels == 4 ) gray_channels = 2 ;
-      else gray_channels = 1;
-
-      int img_size = width * height * channels ;
-      int img_size_gray = width * height * gray_channels ;
-
-      unsigned char *gray_img = malloc (img_size_gray) ;
-
-
+      unsigned char *img = stbi_load(imagefilename, &width, &height, &channels, 0);
       if(img == NULL) {
           printf("Error in loading the image\n");
           exit(1);
+      }else{
+        printf("Loaded image with a width of %dpx, a height of %dpx and %d channels\n", width, height, channels);
+
       }
-      printf("Loaded image with a width of %dpx, a height of %dpx and %d channels\n", width, height, channels);
+      if (channels == 4 ) gray_channels = 2 ;
+      else gray_channels = 1;
+      int img_size = width * height * channels ;
+      int img_size_gray = width * height * gray_channels ;
+      unsigned char *gray_img = malloc (img_size_gray) ;
+
       if(gray_img == NULL) {
           printf("Error in loading the gray image\n");
           exit(1);
       }
-
 
     for(int i = 0 , j = 0 ; i != img_size; i += channels , j+= gray_channels) {
          gray_img[j] = (uint8_t)((img[i+0] + img[i+1] + img[i+2])/3.0);
