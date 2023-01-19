@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdint.h>
 #include <math.h>
+#include <time.h>
 #define KERNEL_SIZE 1
 #define OFFSET 1
 #define thresh_max 90
@@ -190,10 +191,16 @@ void canny_edge_detect(const uint8_t *input_image, int height, int width,
 }
 
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
       int width, height, channels , gray_channels;
+      clock_t t1, t2;
+      char* imagefilename ;
+      float timeInS;
+      //printf("Enter file Name : ");
+      //scanf("%s",imagefilename);
 
-      unsigned char *img = stbi_load("sky2.jpeg", &width, &height, &channels, 0);
+      unsigned char *img = stbi_load("img37202800.jpg", &width, &height, &channels, 0);
 
       if (channels == 4 ) gray_channels = 2 ;
       else gray_channels = 1;
@@ -220,15 +227,16 @@ int main(int argc, char **argv) {
          if(channels == 4)  gray_img[j+1] = img[i+3];
      }
 
-
-     stbi_write_jpg("sky_gray.jpeg", width, height, gray_channels, gray_img, 100);
-     printf("Wrote the gray image with a width of %dpx, a height of %dpx and %d channels\n", width, height, gray_channels);
-
+     //stbi_write_jpg("gray.jpeg", width, height, gray_channels, gray_img, 100);
+     //printf("Wrote the gray image with a width of %dpx, a height of %dpx and %d channels\n", width, height, gray_channels);
      unsigned char *edge_img = malloc (img_size_gray) ;
+     t1 = clock();
      canny_edge_detect(gray_img,height,width,thresh_max,thresh_min,img_size_gray,edge_img);
-     stbi_write_jpg("sky_edge.jpeg", width, height, gray_channels, edge_img, 100);
+     t2 = clock();
+     stbi_write_jpg("result.jpeg", width, height, gray_channels, edge_img, 100);
      printf("Wrote the edge image with a width of %dpx, a height of %dpx and %d channels\n", width, height, gray_channels);
-
+     timeInS = (float)(t2-t1)/CLOCKS_PER_SEC;
+     printf("\n\ntemps d'exécution = %f\n", timeInS);
 
      stbi_image_free(img);
 
