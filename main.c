@@ -12,7 +12,7 @@
 #include "stb/stb_image.h"
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "stb/stb_image_write.h"
-#define NUM_THREADS 4
+#define NUM_THREADS 16
 
 
 void gaussian_blur(const uint8_t *input_image, int height, int width,
@@ -205,7 +205,12 @@ int main(int argc, char **argv) {
 
       int width, height, channels , gray_channels;
       double t1 , t2 , etime;
-      unsigned char *img = stbi_load("sky2.jpeg", &width, &height, &channels, 0);
+      char imagefilename[100] ;
+
+      printf("Enter file Name : ");
+      scanf("%s",imagefilename);
+
+      unsigned char *img = stbi_load(imagefilename, &width, &height, &channels, 0);
       if (channels == 4 ) gray_channels = 2 ;
       else gray_channels = 1;
 
@@ -218,12 +223,11 @@ int main(int argc, char **argv) {
       if(img == NULL) {
           printf("Error in loading the image\n");
           exit(1);
-      }
+      }else {
       printf("Loaded image with a width of %dpx, a height of %dpx and %d channels\n", width, height, channels);
-      if(gray_img == NULL) {
-          printf("Error in loading the gray image\n");
-          exit(1);
       }
+
+
 
 
     for(int i = 0 , j = 0 ; i != img_size; i += channels , j+= gray_channels) {
@@ -231,9 +235,13 @@ int main(int argc, char **argv) {
          if(channels == 4)  gray_img[j+1] = img[i+3];
      }
 
+        if(gray_img == NULL) {
+          printf("Error in loading the gray image\n");
+          exit(1);
+      }
 
-     stbi_write_jpg("sky_gray.jpeg", width, height, gray_channels, gray_img, 100);
-     printf("Wrote the gray image with a width of %dpx, a height of %dpx and %d channels\n", width, height, gray_channels);
+     //stbi_write_jpg("sky_gray.jpeg", width, height, gray_channels, gray_img, 100);
+     //printf("Wrote the gray image with a width of %dpx, a height of %dpx and %d channels\n", width, height, gray_channels);
 
      unsigned char *edge_img = malloc (img_size_gray) ;
      t1 = omp_get_wtime();
@@ -244,9 +252,9 @@ int main(int argc, char **argv) {
 
     etime = (t2 - t1);
 
-	printf("\n\nCanny Edge Algorithme Omp For Schedule Dynamic Execution Time = %f\n", etime);
+	printf("\n*****Canny Edge Algorithme Omp For Schedule Dynamic Execution Time = %f*****\n", etime);
 
-     stbi_write_jpg("sky_edge.jpeg", width, height, gray_channels, edge_img, 100);
+     stbi_write_jpg("Result.jpeg", width, height, gray_channels, edge_img, 100);
      printf("Wrote the edge image with a width of %dpx, a height of %dpx and %d channels\n", width, height, gray_channels);
 
 
