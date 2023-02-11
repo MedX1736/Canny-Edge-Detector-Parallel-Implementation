@@ -235,8 +235,7 @@ int main(int argc, char **argv) {
      }
 
 
-    // stbi_write_jpg("sky_gray.jpeg", width, height, gray_channels, gray_img, 100);
-     //printf("Wrote the gray image with a width of %dpx, a height of %dpx and %d channels\n", width, height, gray_channels);
+
 
      unsigned char *edge_img = malloc (img_size_gray) ;
      t1 = omp_get_wtime();
