@@ -14,7 +14,7 @@
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "stb/stb_image_write.h"
 
-
+//application du filtre gaussien sur tous les pixel de l'image
 void gaussian_blur(const uint8_t *input_image, int height, int width,
                    uint8_t *output_image) {
 
@@ -37,6 +37,7 @@ void gaussian_blur(const uint8_t *input_image, int height, int width,
   }
 }
 
+//calcul des gradients avec leurs magnitudes et directions
 void gradient_magnitude_direction(const uint8_t *input_image, int height,
                                   int width, double *magnitude,
                                   uint8_t *direction) {
@@ -86,6 +87,9 @@ void gradient_magnitude_direction(const uint8_t *input_image, int height,
     }
   }
 }
+
+
+//suppression des non maximum pour garder les bords les plus forts
 void non_max_suppression(double *gradient_magnitude,
                          uint8_t *gradient_direction, int height, int width,
                          double *output_image) {
@@ -130,6 +134,8 @@ void non_max_suppression(double *gradient_magnitude,
     }
   }
 }
+
+//classer les bords de l'image en forts faibles et non bords
 void thresholding(double *suppressed_image, int height, int width,
                   int high_threshold, int low_threshold,
                   uint8_t *output_image) {
@@ -147,6 +153,7 @@ void thresholding(double *suppressed_image, int height, int width,
   }
 }
 
+//traiter les bords faibles pour decider s'ils sont bords ou pas
 void hysteresis(uint8_t *input_image, int height, int width,
                 uint8_t *output_image) {
 
@@ -200,6 +207,7 @@ int main(int argc, char **argv)
       printf("Enter file Name : ");
       scanf("%s",imagefilename);
 
+      //charger l'image a traiter 
       unsigned char *img = stbi_load(imagefilename, &width, &height, &channels, 0);
       if(img == NULL) {
           printf("Error in loading the image\n");
@@ -219,22 +227,23 @@ int main(int argc, char **argv)
           exit(1);
       }
 
+    //transformer l'image qui est sur 3 coleurs RVB ou 4 en une seule couleur
     for(int i = 0 , j = 0 ; i != img_size; i += channels , j+= gray_channels) {
          gray_img[j] = (uint8_t)((img[i+0] + img[i+1] + img[i+2])/3.0);
          if(channels == 4)  gray_img[j+1] = img[i+3];
      }
 
-     //stbi_write_jpg("gray.jpeg", width, height, gray_channels, gray_img, 100);
-     //printf("Wrote the gray image with a width of %dpx, a height of %dpx and %d channels\n", width, height, gray_channels);
      unsigned char *edge_img = malloc (img_size_gray) ;
      t1 = clock();
+     //appliquer la fonction sur l'image grise
      canny_edge_detect(gray_img,height,width,thresh_max,thresh_min,img_size_gray,edge_img);
      t2 = clock();
+     //enregistrer l'image
      stbi_write_jpg("result.jpeg", width, height, gray_channels, edge_img, 100);
      printf("Wrote the edge image with a width of %dpx, a height of %dpx and %d channels\n", width, height, gray_channels);
      timeInS = (float)(t2-t1)/CLOCKS_PER_SEC;
-     printf("\n\ntemps d'exécution = %f\n", timeInS);
-
+     printf("\n\ntemps d'execution = %f\n", timeInS);
+    //Liberer les ressources
      stbi_image_free(img);
 
 
